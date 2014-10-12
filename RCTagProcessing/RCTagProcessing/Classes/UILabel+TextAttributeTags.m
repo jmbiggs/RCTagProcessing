@@ -8,11 +8,24 @@
 
 #import "UILabel+TextAttributeTags.h"
 #import "RCTagProcessor.h"
+#import "UIFont+BoldFont.h"
 
 @implementation UILabel (TextAttributeTags)
 
-- (void)rc_processFormatTagsInText:(NSString *)text {
-    self.attributedText = [RCTagProcessor attributedStringForText:text];
+- (void)rc_setTaggedText:(NSString *)textWithTags {
+    NSMutableAttributedString *mutableAttributedString = [[RCTagProcessor attributedStringForText:textWithTags] mutableCopy];
+    UIFont *selfBoldFont = [self.font rc_boldFont];
+    
+    [mutableAttributedString enumerateAttributesInRange:NSMakeRange(0, mutableAttributedString.length) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+        UIFont *font = [attrs valueForKey:NSFontAttributeName];
+
+        if ([font isEqual:[RCTagProcessor kBoldFont]] && selfBoldFont) {
+            [mutableAttributedString addAttribute:NSFontAttributeName value:selfBoldFont range:range];
+        }
+    }];
+    
+    
+    self.attributedText = mutableAttributedString;
 }
 
 @end

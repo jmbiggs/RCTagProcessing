@@ -7,8 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "UIButton+TextAttributeTags.h"
+#import "UILabel+TextAttributeTags.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet UIButton *button;
 
 @end
 
@@ -17,6 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    [self.label rc_setTaggedText:@"Test<b>test</b>Test"];
+    
 }
 
 - (void)didReceiveMemoryWarning {

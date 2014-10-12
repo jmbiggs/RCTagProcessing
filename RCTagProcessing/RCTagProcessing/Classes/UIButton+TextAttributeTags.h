@@ -10,4 +10,7 @@
 
 @interface UIButton (TextAttributeTags)
 
+- (void)rc_setTaggedTitle:(NSString *)titleWithTags forState:(UIControlState)state;
+- (void)rc_setTaggedTitleForAllStates:(NSString *)titleWithTags;
+
 @end

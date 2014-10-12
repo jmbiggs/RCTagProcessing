@@ -17,6 +17,7 @@
 		8538610619E9A23600475EC1 /* UILabel+TextAttributeTags.m in Sources */ = {isa = PBXBuildFile; fileRef = 8538610519E9A23600475EC1 /* UILabel+TextAttributeTags.m */; };
 		8538610919E9A2CB00475EC1 /* UIButton+TextAttributeTags.m in Sources */ = {isa = PBXBuildFile; fileRef = 8538610819E9A2CB00475EC1 /* UIButton+TextAttributeTags.m */; };
 		8538610C19E9A2FF00475EC1 /* RCTagProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8538610B19E9A2FF00475EC1 /* RCTagProcessor.m */; };
+		8538610F19EAAB1200475EC1 /* UIFont+BoldFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 8538610E19EAAB1200475EC1 /* UIFont+BoldFont.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,8 @@
 		8538610819E9A2CB00475EC1 /* UIButton+TextAttributeTags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+TextAttributeTags.m"; sourceTree = "<group>"; };
 		8538610A19E9A2FF00475EC1 /* RCTagProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTagProcessor.h; sourceTree = "<group>"; };
 		8538610B19E9A2FF00475EC1 /* RCTagProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTagProcessor.m; sourceTree = "<group>"; };
+		8538610D19EAAB1200475EC1 /* UIFont+BoldFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+BoldFont.h"; sourceTree = "<group>"; };
+		8538610E19EAAB1200475EC1 /* UIFont+BoldFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+BoldFont.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +139,8 @@
 				8538610519E9A23600475EC1 /* UILabel+TextAttributeTags.m */,
 				8538610719E9A2CB00475EC1 /* UIButton+TextAttributeTags.h */,
 				8538610819E9A2CB00475EC1 /* UIButton+TextAttributeTags.m */,
+				8538610D19EAAB1200475EC1 /* UIFont+BoldFont.h */,
+				8538610E19EAAB1200475EC1 /* UIFont+BoldFont.m */,
 				8538610A19E9A2FF00475EC1 /* RCTagProcessor.h */,
 				8538610B19E9A2FF00475EC1 /* RCTagProcessor.m */,
 			);
@@ -245,6 +250,7 @@
 				8538610C19E9A2FF00475EC1 /* RCTagProcessor.m in Sources */,
 				8538610919E9A2CB00475EC1 /* UIButton+TextAttributeTags.m in Sources */,
 				853860E319E9730300475EC1 /* ViewController.m in Sources */,
+				8538610F19EAAB1200475EC1 /* UIFont+BoldFont.m in Sources */,
 				853860E019E9730300475EC1 /* AppDelegate.m in Sources */,
 				853860DD19E9730300475EC1 /* main.m in Sources */,
 				8538610619E9A23600475EC1 /* UILabel+TextAttributeTags.m in Sources */,

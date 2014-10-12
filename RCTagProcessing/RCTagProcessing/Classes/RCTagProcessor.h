@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface RCTagProcessor : NSObject
+
++ (UIFont *)kBoldFont;
 
 + (NSAttributedString *)attributedStringForText:(NSString *)plainText;
 

@@ -22,7 +22,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="101" id="bl5-1g-gqW"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -46,6 +46,10 @@
                             <constraint firstItem="8mi-P8-74S" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="aQo-DJ-Hcq"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="button" destination="8mi-P8-74S" id="s1a-NB-CIr"/>
+                        <outlet property="label" destination="4eW-uz-WPw" id="Mte-68-6OZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

@@ -10,4 +10,6 @@
 
 @interface UILabel (TextAttributeTags)
 
+- (void)rc_setTaggedText:(NSString *)textWithTags;
+
 @end
