@@ -15,7 +15,8 @@
     for (NSString *fontName in fontNames) {
         NSString *upperCaseFontName = [fontName uppercaseString];
         if ([upperCaseFontName rangeOfString:@"BOLD"].location != NSNotFound &&
-            [upperCaseFontName rangeOfString:@"ITAL"].location == NSNotFound) {
+            [upperCaseFontName rangeOfString:@"ITAL"].location == NSNotFound &&
+            [upperCaseFontName rangeOfString:@"OBLIQ"].location == NSNotFound) {
             return [UIFont fontWithName:fontName size:self.pointSize];
         }
     }
