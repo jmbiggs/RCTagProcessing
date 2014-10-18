@@ -11,25 +11,35 @@
 
 @implementation RCTagProcessor
 
-+ (NSAttributedString *)attributedStringForText:(NSString *)plainText {
++ (instancetype)defaultInstance {
+    static RCTagProcessor *_sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedInstance = [[RCTagProcessor alloc] init];
+    });
+    
+    return _sharedInstance;
+}
+
+- (NSAttributedString *)attributedStringForText:(NSString *)plainText {
     return [self attributedStringForText:plainText withRegularFont:nil boldFont:nil andSmallFont:nil];
 }
 
-+ (NSAttributedString *)attributedStringForText:(NSString *)plainText withRegularFont:(UIFont *)regularFont boldFont:(UIFont *)boldFont andSmallFont:(UIFont *)smallFont {
+- (NSAttributedString *)attributedStringForText:(NSString *)plainText withRegularFont:(UIFont *)regularFont boldFont:(UIFont *)boldFont andSmallFont:(UIFont *)smallFont {
     if (!plainText) {
         return nil;
     }
     
     if (!regularFont) {
-        regularFont = [self kRegularFont];
+        regularFont = [self regularFont];
     }
     
     if (!boldFont) {
-        boldFont = [self kBoldFont];
+        boldFont = [self boldFont];
     }
     
     if (!smallFont) {
-        smallFont = [self kSmallFont];
+        smallFont = [self smallFont];
     }
     
     NSError *error;
@@ -65,7 +75,7 @@
     return attributedText;
 }
 
-+ (UIFont *)kRegularFont {
+- (UIFont *)regularFont {
     static UIFont *regularFontConstant = nil;
     if (!regularFontConstant) {
         regularFontConstant = [UIFont systemFontOfSize:10.42];
@@ -73,7 +83,7 @@
     return regularFontConstant;
 }
 
-+ (UIFont *)kBoldFont {
+- (UIFont *)boldFont {
     static UIFont *boldFontConstant = nil;
     if (!boldFontConstant) {
         boldFontConstant = [UIFont boldSystemFontOfSize:10.42];
@@ -81,7 +91,7 @@
     return boldFontConstant;
 }
 
-+ (UIFont *)kSmallFont {
+- (UIFont *)smallFont {
     static UIFont *smallFontConstant = nil;
     if (!smallFontConstant) {
         smallFontConstant = [UIFont systemFontOfSize:5.42];

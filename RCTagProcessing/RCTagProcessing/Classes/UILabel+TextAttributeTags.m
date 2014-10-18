@@ -27,7 +27,7 @@
         selfSmallFont = [UIFont fontWithName:self.font.fontName size:self.font.pointSize * 0.75];
     }
     
-    NSAttributedString *attributedString = [RCTagProcessor attributedStringForText:textWithTags withRegularFont:self.font boldFont:selfBoldFont andSmallFont:selfSmallFont];
+    NSAttributedString *attributedString = [[RCTagProcessor defaultInstance] attributedStringForText:textWithTags withRegularFont:self.font boldFont:selfBoldFont andSmallFont:selfSmallFont];
     
     self.attributedText = attributedString;
 }

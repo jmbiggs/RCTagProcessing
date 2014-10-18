@@ -27,7 +27,7 @@
         selfSmallFont = [UIFont fontWithName:self.titleLabel.font.fontName size:self.titleLabel.font.pointSize * 0.75];
     }
     
-    NSAttributedString *attributedString = [RCTagProcessor attributedStringForText:titleWithTags withRegularFont:self.titleLabel.font boldFont:selfBoldFont andSmallFont:selfSmallFont];
+    NSAttributedString *attributedString = [[RCTagProcessor defaultInstance] attributedStringForText:titleWithTags withRegularFont:self.titleLabel.font boldFont:selfBoldFont andSmallFont:selfSmallFont];
     
     [self setAttributedTitle:attributedString forState:state];
 }

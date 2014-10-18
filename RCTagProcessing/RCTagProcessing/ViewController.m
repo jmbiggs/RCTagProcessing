@@ -23,13 +23,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *stringWithTags = @"<b>Bold</b><sup>sup</sup><sub>sub</sub><strike>strike</strike><i>Italic</i>";
+    NSString *stringWithTags = @"<b>Bold</b><sup>sup</sup><sub>sub</sub><u>Underline</u><strike>strike</strike><i>Italic</i>";
     
     [self.label rc_setTaggedText:stringWithTags];
     [self.button rc_setTaggedTitle:stringWithTags forState:UIControlStateNormal];
     
     //To showcae generating attributed directly
-    self.label2.attributedText = [RCTagProcessor attributedStringForText:stringWithTags];
+    self.label2.attributedText = [[RCTagProcessor defaultInstance] attributedStringForText:stringWithTags];
 }
 
 - (void)didReceiveMemoryWarning {

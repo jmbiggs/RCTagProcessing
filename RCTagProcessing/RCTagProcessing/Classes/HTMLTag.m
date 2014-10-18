@@ -11,20 +11,39 @@
 
 @interface HTMLTag ()
 
+@property (nonatomic, strong, readwrite) NSString *value;
 @property (nonatomic, strong, readwrite) NSMutableArray *attributeNames;
 @property (nonatomic, strong, readwrite) NSMutableArray *attributeValues;
+@property (nonatomic, assign) BOOL namesAndValuesObsoleted;
+@property (nonatomic, strong) UIFont *regularFont;
+@property (nonatomic, strong) UIFont *boldFont;
+@property (nonatomic, strong) UIFont *smallFont;
 
 @end
 
 @implementation HTMLTag
+
+const CGFloat defaultSuperscriptOffsetFactor = 0.5;
+const CGFloat defaultSubscriptOffsetFactor = 0.25;
+const CGFloat defaultObliquenessOffsetFactor = 0.33;
 
 - (instancetype)initFromString:(NSString *)stringContainingTag regularFont:(UIFont *)regularFont boldFont:(UIFont *)boldFont smallFont:(UIFont *)smallFont {
     self = [super init];
     if (self) {
         //TODO: add support for parametrized tags (e.g. <font color=red>)
         //TODO: add support for self-closed tags (e.g. </br>)
+        if (stringContainingTag.length < 3) {
+            [NSException raise:@"Invalid tag string" format:@"A valid tag must be at least 3 caracters long"];
+        }
         _value = [stringContainingTag substringWithRange:NSMakeRange(1, stringContainingTag.length - 2)];
-        [self setUpAttributeNameAndValueWithRegularFont:regularFont boldFont:boldFont smallFont:smallFont];
+        _superscriptOffsetFactor = defaultSuperscriptOffsetFactor;
+        _subscriptOffsetFactor = defaultSubscriptOffsetFactor;
+        _obliquenessFactor = defaultObliquenessOffsetFactor;
+        _regularFont = regularFont;
+        _boldFont = boldFont;
+        _smallFont = smallFont;
+        _namesAndValuesObsoleted = YES;
+        [self setUpAttributeNamesAndValues];
     }
     return self;
 }
@@ -44,32 +63,68 @@
     return range;
 }
 
-- (void)setUpAttributeNameAndValueWithRegularFont:(UIFont *)regularFont boldFont:(UIFont *)boldFont smallFont:(UIFont *)smallFont {
+- (NSMutableArray *)attributeValues {
+    if (!self.namesAndValuesObsoleted) {
+        return _attributeValues;
+    } else {
+        [self setUpAttributeNamesAndValues];
+        return _attributeValues;
+    }
+}
+
+- (NSMutableArray *)attributeNames {
+    if (!self.namesAndValuesObsoleted) {
+        return _attributeNames;
+    } else {
+        [self setUpAttributeNamesAndValues];
+        return _attributeNames;
+    }
+}
+
+- (void)setSuperscriptOffsetFactor:(CGFloat)superscriptOffsetFactor {
+    _superscriptOffsetFactor = superscriptOffsetFactor;
+    _namesAndValuesObsoleted = YES;
+}
+
+- (void)setSubscriptOffsetFactor:(CGFloat)subscriptOffsetFactor {
+    _subscriptOffsetFactor = subscriptOffsetFactor;
+    _namesAndValuesObsoleted = YES;
+}
+
+- (void)setObliquenessFactor:(CGFloat)obliquenessFactor {
+    _obliquenessFactor = obliquenessFactor;
+    _namesAndValuesObsoleted = YES;
+}
+
+- (void)setUpAttributeNamesAndValues {
     _attributeNames = [NSMutableArray new];
     _attributeValues = [NSMutableArray new];
+    
+    _namesAndValuesObsoleted = NO;
+    
     if ([self.value isEqualToString:@"b"]) {
-        if (boldFont) {
+        if (_boldFont) {
             [_attributeNames addObject:NSFontAttributeName];
-            [_attributeValues addObject:boldFont];
+            [_attributeValues addObject:_boldFont];
         }
     } else if ([self.value isEqualToString:@"sup"]) {
-        if (regularFont) {
+        if (_regularFont) {
             [_attributeNames addObject:NSBaselineOffsetAttributeName];
-            [_attributeValues addObject:[NSNumber numberWithFloat:regularFont.pointSize * 0.5]];
+            [_attributeValues addObject:[NSNumber numberWithFloat:_regularFont.pointSize * _superscriptOffsetFactor]];
         }
         
-        if (smallFont) {
+        if (_smallFont) {
             [_attributeNames addObject:NSFontAttributeName];
-            [_attributeValues addObject:smallFont];
+            [_attributeValues addObject:_smallFont];
         }
     } else if ([self.value isEqualToString:@"sub"]) {
-        if (regularFont) {
+        if (_regularFont) {
             [_attributeNames addObject:NSBaselineOffsetAttributeName];
-            [_attributeValues addObject:[NSNumber numberWithFloat:regularFont.pointSize * (-0.25)]];
+            [_attributeValues addObject:[NSNumber numberWithFloat:_regularFont.pointSize * -_subscriptOffsetFactor]];
         }
-        if (smallFont) {
+        if (_smallFont) {
             [_attributeNames addObject:NSFontAttributeName];
-            [_attributeValues addObject:smallFont];
+            [_attributeValues addObject:_smallFont];
         }
     } else if ([self.value isEqualToString:@"u"]) {
         [_attributeNames addObject:NSUnderlineStyleAttributeName];
@@ -79,7 +134,7 @@
         [_attributeValues addObject:[NSNumber numberWithInt:1]];
     } else if ([self.value isEqualToString:@"i"]) {
         [_attributeNames addObject:NSObliquenessAttributeName];
-        [_attributeValues addObject:[NSNumber numberWithFloat:0.33]];
+        [_attributeValues addObject:[NSNumber numberWithFloat:_obliquenessFactor]];
     }
 }
 
