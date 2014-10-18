@@ -10,6 +10,11 @@
 
 @interface UIButton (TextAttributeTags)
 
+- (void)rc_setTaggedTitle:(NSString *)titleWithTags forState:(UIControlState)state fontForBold:(UIFont *)boldFont;
+- (void)rc_setTaggedTitleForAllStates:(NSString *)titleWithTags fontForBold:(UIFont *)boldFont;
+
+
+//Convenience:
 - (void)rc_setTaggedTitle:(NSString *)titleWithTags forState:(UIControlState)state;
 - (void)rc_setTaggedTitleForAllStates:(NSString *)titleWithTags;
 

@@ -13,19 +13,18 @@
 @implementation UILabel (TextAttributeTags)
 
 - (void)rc_setTaggedText:(NSString *)textWithTags {
-    NSMutableAttributedString *mutableAttributedString = [[RCTagProcessor attributedStringForText:textWithTags] mutableCopy];
-    UIFont *selfBoldFont = [self.font rc_boldFont];
-    
-    [mutableAttributedString enumerateAttributesInRange:NSMakeRange(0, mutableAttributedString.length) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-        UIFont *font = [attrs valueForKey:NSFontAttributeName];
+    [self rc_setTaggedText:textWithTags fontForBold:nil];
+}
 
-        if ([font isEqual:[RCTagProcessor kBoldFont]] && selfBoldFont) {
-            [mutableAttributedString addAttribute:NSFontAttributeName value:selfBoldFont range:range];
-        }
-    }];
+- (void)rc_setTaggedText:(NSString *)textWithTags fontForBold:(UIFont *)boldFont {
+    UIFont *selfBoldFont = boldFont;
+    if (!selfBoldFont) {
+        selfBoldFont = [self.font rc_boldFont];
+    }
     
+    NSAttributedString *attributedString = [RCTagProcessor attributedStringForText:textWithTags withRegularFont:self.font andBoldFont:selfBoldFont];
     
-    self.attributedText = mutableAttributedString;
+    self.attributedText = attributedString;
 }
 
 @end

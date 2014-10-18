@@ -31,6 +31,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="87" id="VvJ-AK-VB1"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>

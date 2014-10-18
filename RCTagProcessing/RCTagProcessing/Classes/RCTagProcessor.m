@@ -13,13 +13,22 @@
 @property (nonatomic, assign) NSUInteger startLocation;
 @property (nonatomic, assign) NSUInteger endLocation;
 @property (nonatomic, strong) NSString *value;
+@property (nonatomic, strong) UIFont *regularFont;
+@property (nonatomic, strong) UIFont *boldFont;
 @property (nonatomic, strong, readonly) NSString *startTag;
 @property (nonatomic, strong, readonly) NSString *endTag;
 @property (nonatomic, assign, readonly) NSRange range;
-@property (nonatomic, strong, readonly) NSString *attributeName;
-@property (nonatomic, strong, readonly) id attributeValue;
+@property (nonatomic, strong, readonly) NSMutableArray *attributeNames;
+@property (nonatomic, strong, readonly) NSMutableArray *attributeValues;
 
 - (instancetype)initFromString:(NSString *)stringContainingTag;
+
+@end
+
+@interface HTMLTag ()
+
+@property (nonatomic, strong, readwrite) NSMutableArray *attributeNames;
+@property (nonatomic, strong, readwrite) NSMutableArray *attributeValues;
 
 @end
 
@@ -28,7 +37,10 @@
 - (instancetype)initFromString:(NSString *)stringContainingTag {
     self = [super init];
     if (self) {
+        //TODO: add support for parametrized tags (e.g. <font color=red>)
+        //TODO: add support for self-closed tags (e.g. </br>)
         _value = [stringContainingTag substringWithRange:NSMakeRange(1, stringContainingTag.length - 2)];
+        [self setUpAttributeNameAndValue];
     }
     return self;
 }
@@ -48,30 +60,64 @@
     return range;
 }
 
-- (NSString *)attributeName {
-    if ([self.value isEqualToString:@"b"]) {
-        return NSFontAttributeName;
-    }
-    if ([self.value isEqualToString:@"sup"]) {
-        return NSBaselineOffsetAttributeName;
-    }
-    if ([self.value isEqualToString:@"u"]) {
-        return NSUnderlineStyleAttributeName;
-    }
-    return nil;
+- (void)setRegularFont:(UIFont *)regularFont {
+    _regularFont = regularFont;
+    [self setUpAttributeNameAndValue];
 }
 
-- (id)attributeValue {
+- (void)setBoldFont:(UIFont *)boldFont {
+    _boldFont = boldFont;
+    [self setUpAttributeNameAndValue];
+}
+
+- (void)setUpAttributeNameAndValue {
+    _attributeNames = [NSMutableArray new];
+    _attributeValues = [NSMutableArray new];
     if ([self.value isEqualToString:@"b"]) {
-        return [RCTagProcessor kBoldFont];
+        [_attributeNames addObject:NSFontAttributeName];
+        if (!_boldFont) {
+            [_attributeValues addObject:[RCTagProcessor kBoldFont]];
+        } else {
+            [_attributeValues addObject:_boldFont];
+        }
+    } else if ([self.value isEqualToString:@"sup"]) {
+        [_attributeNames addObject:NSBaselineOffsetAttributeName];
+        if (!_regularFont) {
+            [_attributeValues addObject:[NSNumber numberWithFloat:[RCTagProcessor kSupOffset]]];
+        } else {
+            [_attributeValues addObject:[NSNumber numberWithFloat:_regularFont.pointSize * 0.5]];
+        }
+        
+        [_attributeNames addObject:NSFontAttributeName];
+        if (!_regularFont) {
+            [_attributeValues addObject:[RCTagProcessor kSmallFont]];
+        } else {
+            [_attributeValues addObject:[UIFont fontWithName:_regularFont.fontName size:_regularFont.pointSize * 0.75]];
+        }
+    } else if ([self.value isEqualToString:@"sub"]) {
+        [_attributeNames addObject:NSBaselineOffsetAttributeName];
+        if (!_regularFont) {
+            [_attributeValues addObject:[NSNumber numberWithFloat:[RCTagProcessor kSubOffset]]];
+        } else {
+            [_attributeValues addObject:[NSNumber numberWithFloat:_regularFont.pointSize * (-0.25)]];
+        }
+        
+        [_attributeNames addObject:NSFontAttributeName];
+        if (!_regularFont) {
+            [_attributeValues addObject:[RCTagProcessor kSmallFont]];
+        } else {
+            [_attributeValues addObject:[UIFont fontWithName:_regularFont.fontName size:_regularFont.pointSize * 0.75]];
+        }
+    } else if ([self.value isEqualToString:@"u"]) {
+        [_attributeNames addObject:NSUnderlineStyleAttributeName];
+        [_attributeValues addObject:[NSNumber numberWithInt:NSUnderlineStyleSingle]];
+    } else if ([self.value isEqualToString:@"strike"]) {
+        [_attributeNames addObject:NSStrikethroughStyleAttributeName];
+        [_attributeValues addObject:[NSNumber numberWithInt:1]];
+    } else if ([self.value isEqualToString:@"i"]) {
+        [_attributeNames addObject:NSObliquenessAttributeName];
+        [_attributeValues addObject:[NSNumber numberWithFloat:0.33]];
     }
-    if ([self.value isEqualToString:@"sup"]) {
-        return [NSNumber numberWithFloat:10];
-    }
-    if ([self.value isEqualToString:@"u"]) {
-        return [NSNumber numberWithInt:NSUnderlineStyleSingle];
-    }
-    return nil;
 }
 
 @end
@@ -80,6 +126,10 @@
 @implementation RCTagProcessor
 
 + (NSAttributedString *)attributedStringForText:(NSString *)plainText {
+    return [self attributedStringForText:plainText withRegularFont:nil andBoldFont:nil];
+}
+
++ (NSAttributedString *)attributedStringForText:(NSString *)plainText withRegularFont:(UIFont *)regularFont andBoldFont:(UIFont *)boldFont {
     if (!plainText) {
         return nil;
     }
@@ -94,6 +144,8 @@
     
     while ((match = [regex firstMatchInString:plainText options:0 range:NSMakeRange(0, plainText.length)])) {
         HTMLTag *tag = [[HTMLTag alloc] initFromString:[plainText substringWithRange:match.range]];
+        tag.regularFont = regularFont;
+        tag.boldFont = boldFont;
         tag.startLocation = match.range.location;
         
         plainText = [plainText stringByReplacingCharactersInRange:match.range withString:@""];
@@ -109,7 +161,9 @@
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:plainText];
 
     for (HTMLTag *tag in tagsArray) {
-        [attributedText addAttribute:[tag attributeName] value:[tag attributeValue] range:tag.range];
+        for (int i = 0; i < tag.attributeNames.count;i++) {
+            [attributedText addAttribute:[tag.attributeNames objectAtIndex:i] value:[tag.attributeValues objectAtIndex:i] range:tag.range];
+        }
     }
     
     return attributedText;
@@ -118,9 +172,26 @@
 + (UIFont *)kBoldFont {
     static UIFont *boldFontConstant = nil;
     if (!boldFontConstant) {
-        boldFontConstant = [UIFont boldSystemFontOfSize:42.42];
+        boldFontConstant = [UIFont boldSystemFontOfSize:10.42];
     }
     return boldFontConstant;
+}
+
++ (UIFont *)kSmallFont {
+    static UIFont *smallFontConstant = nil;
+    if (!smallFontConstant) {
+        smallFontConstant = [UIFont boldSystemFontOfSize:5.42];
+    }
+    return smallFontConstant;
+}
+
+
++ (CGFloat)kSupOffset {
+    return 10.42;
+}
+
++ (CGFloat)kSubOffset {
+    return -[self kSupOffset]/2;
 }
 
 @end

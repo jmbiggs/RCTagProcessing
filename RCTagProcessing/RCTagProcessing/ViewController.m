@@ -20,8 +20,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    [self.label rc_setTaggedText:@"Test<b>test</b>Test<sup>test</sup>"];
+    
+    NSString *stringWithTags = @"<b>Bold</b><sup>sup</sup><sub>sub</sub><strike>strike</strike><i>Italic</i>";
+    
+    [self.label rc_setTaggedText:stringWithTags];
+    [self.button rc_setTaggedTitle:stringWithTags forState:UIControlStateNormal];
     
 }
 
