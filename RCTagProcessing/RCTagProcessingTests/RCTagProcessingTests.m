@@ -39,7 +39,9 @@
     XCTAssertEqual(tag.attributeNames.count, tag.attributeValues.count);
     XCTAssertEqualObjects(tag.startTag, @"<unknownTag>");
     XCTAssertEqualObjects(tag.endTag, @"</unknownTag>");
-
+    XCTAssertEqual(tag.superscriptOffsetFactor, rc_defaultSuperscriptOffsetFactor);
+    XCTAssertEqual(tag.subscriptOffsetFactor, rc_defaultSubscriptOffsetFactor);
+    XCTAssertEqual(tag.obliquenessFactor, rc_defaultObliquenessOffsetFactor);
     
     //Test range
     XCTAssertEqual(tag.startLocation, 0);
@@ -147,10 +149,11 @@
     UIFont *boldFont = [UIFont fontWithName:@"Courier-Bold" size:13];
     NSString *string = @"<u>";
     
-    //Baseline for 100000 allocations: 0.257s
+    //Baseline for 100k allocations: 0.257s
     //on a 2011, 2.2 GHz Core i7 Macbook Pro
     [self measureBlock:^{
-        for (int i = 0; i < 100000; i++) {
+        //reducing allocations to 1000 to shorten the test
+        for (int i = 0; i < 1000; i++) {
             HTMLTag *tag = [[HTMLTag alloc] initFromString:string regularFont:regularFont boldFont:boldFont smallFont:smallFont];
         }
     }];

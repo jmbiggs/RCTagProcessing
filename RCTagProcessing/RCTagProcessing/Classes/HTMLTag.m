@@ -23,9 +23,9 @@
 
 @implementation HTMLTag
 
-const CGFloat defaultSuperscriptOffsetFactor = 0.5;
-const CGFloat defaultSubscriptOffsetFactor = 0.25;
-const CGFloat defaultObliquenessOffsetFactor = 0.33;
+const CGFloat rc_defaultSuperscriptOffsetFactor = 0.5;
+const CGFloat rc_defaultSubscriptOffsetFactor = 0.25;
+const CGFloat rc_defaultObliquenessOffsetFactor = 0.33;
 
 - (instancetype)initFromString:(NSString *)stringContainingTag regularFont:(UIFont *)regularFont boldFont:(UIFont *)boldFont smallFont:(UIFont *)smallFont {
     self = [super init];
@@ -36,9 +36,9 @@ const CGFloat defaultObliquenessOffsetFactor = 0.33;
             [NSException raise:@"Invalid tag string" format:@"A valid tag must be at least 3 caracters long"];
         }
         _value = [stringContainingTag substringWithRange:NSMakeRange(1, stringContainingTag.length - 2)];
-        _superscriptOffsetFactor = defaultSuperscriptOffsetFactor;
-        _subscriptOffsetFactor = defaultSubscriptOffsetFactor;
-        _obliquenessFactor = defaultObliquenessOffsetFactor;
+        _superscriptOffsetFactor = rc_defaultSuperscriptOffsetFactor;
+        _subscriptOffsetFactor = rc_defaultSubscriptOffsetFactor;
+        _obliquenessFactor = rc_defaultObliquenessOffsetFactor;
         _regularFont = regularFont;
         _boldFont = boldFont;
         _smallFont = smallFont;

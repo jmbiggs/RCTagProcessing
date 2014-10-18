@@ -10,6 +10,13 @@
 #import <UIKit/UIKit.h>
 
 /**
+ *  These values look OK in most cases
+ */
+extern const CGFloat rc_defaultSuperscriptOffsetFactor;
+extern const CGFloat rc_defaultSubscriptOffsetFactor;
+extern const CGFloat rc_defaultObliquenessOffsetFactor;
+
+/**
  *  Currently supported tags:
  *  <b>, <u>, <i>, <sup>, <sub>, <strike>
  */
