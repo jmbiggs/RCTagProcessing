@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		852B6C1D19F2BC8500534963 /* HTMLTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 852B6C1C19F2BC8500534963 /* HTMLTag.m */; };
 		853860DD19E9730300475EC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 853860DC19E9730300475EC1 /* main.m */; };
 		853860E019E9730300475EC1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 853860DF19E9730300475EC1 /* AppDelegate.m */; };
 		853860E319E9730300475EC1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 853860E219E9730300475EC1 /* ViewController.m */; };
@@ -31,6 +32,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		852B6C1B19F2BC8500534963 /* HTMLTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLTag.h; sourceTree = "<group>"; };
+		852B6C1C19F2BC8500534963 /* HTMLTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLTag.m; sourceTree = "<group>"; };
 		853860D719E9730300475EC1 /* RCTagProcessing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RCTagProcessing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		853860DB19E9730300475EC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		853860DC19E9730300475EC1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -143,6 +146,8 @@
 				8538610E19EAAB1200475EC1 /* UIFont+BoldFont.m */,
 				8538610A19E9A2FF00475EC1 /* RCTagProcessor.h */,
 				8538610B19E9A2FF00475EC1 /* RCTagProcessor.m */,
+				852B6C1B19F2BC8500534963 /* HTMLTag.h */,
+				852B6C1C19F2BC8500534963 /* HTMLTag.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -252,6 +257,7 @@
 				853860E319E9730300475EC1 /* ViewController.m in Sources */,
 				8538610F19EAAB1200475EC1 /* UIFont+BoldFont.m in Sources */,
 				853860E019E9730300475EC1 /* AppDelegate.m in Sources */,
+				852B6C1D19F2BC8500534963 /* HTMLTag.m in Sources */,
 				853860DD19E9730300475EC1 /* main.m in Sources */,
 				8538610619E9A23600475EC1 /* UILabel+TextAttributeTags.m in Sources */,
 			);
@@ -446,6 +452,7 @@
 				853860FC19E9730300475EC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		853860FD19E9730300475EC1 /* Build configuration list for PBXNativeTarget "RCTagProcessingTests" */ = {
 			isa = XCConfigurationList;
@@ -454,6 +461,7 @@
 				853860FF19E9730300475EC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
