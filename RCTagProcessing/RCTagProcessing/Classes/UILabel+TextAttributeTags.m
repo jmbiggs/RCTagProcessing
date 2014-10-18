@@ -13,16 +13,21 @@
 @implementation UILabel (TextAttributeTags)
 
 - (void)rc_setTaggedText:(NSString *)textWithTags {
-    [self rc_setTaggedText:textWithTags fontForBold:nil];
+    [self rc_setTaggedText:textWithTags fontForBold:nil smallFont:nil];
 }
 
-- (void)rc_setTaggedText:(NSString *)textWithTags fontForBold:(UIFont *)boldFont {
+- (void)rc_setTaggedText:(NSString *)textWithTags fontForBold:(UIFont *)boldFont smallFont:(UIFont *)smallFont {
     UIFont *selfBoldFont = boldFont;
     if (!selfBoldFont) {
         selfBoldFont = [self.font rc_boldFont];
     }
     
-    NSAttributedString *attributedString = [RCTagProcessor attributedStringForText:textWithTags withRegularFont:self.font andBoldFont:selfBoldFont];
+    UIFont *selfSmallFont = smallFont;
+    if (!selfSmallFont) {
+        selfSmallFont = [UIFont fontWithName:self.font.fontName size:self.font.pointSize * 0.75];
+    }
+    
+    NSAttributedString *attributedString = [RCTagProcessor attributedStringForText:textWithTags withRegularFont:self.font boldFont:selfBoldFont andSmallFont:selfSmallFont];
     
     self.attributedText = attributedString;
 }

@@ -36,20 +36,30 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6J8-Da-jDa">
+                                <rect key="frame" x="16" y="447" width="568" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="6J8-Da-jDa" firstAttribute="top" secondItem="8mi-P8-74S" secondAttribute="bottom" constant="104" id="73H-o1-W3k"/>
                             <constraint firstItem="4eW-uz-WPw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="9As-zt-qGY"/>
+                            <constraint firstItem="6J8-Da-jDa" firstAttribute="trailing" secondItem="4eW-uz-WPw" secondAttribute="trailing" id="CMI-cW-XZQ"/>
                             <constraint firstItem="8mi-P8-74S" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="GwY-NB-NAo"/>
                             <constraint firstItem="4eW-uz-WPw" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="35" id="OAs-Ud-p61"/>
                             <constraint firstItem="4eW-uz-WPw" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="RVp-Vy-ijH"/>
                             <constraint firstItem="8mi-P8-74S" firstAttribute="top" secondItem="4eW-uz-WPw" secondAttribute="bottom" constant="100" id="Ylt-Ro-pKI"/>
                             <constraint firstItem="8mi-P8-74S" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="aQo-DJ-Hcq"/>
+                            <constraint firstItem="6J8-Da-jDa" firstAttribute="leading" secondItem="4eW-uz-WPw" secondAttribute="leading" id="pUt-Tk-yi5"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="button" destination="8mi-P8-74S" id="s1a-NB-CIr"/>
                         <outlet property="label" destination="4eW-uz-WPw" id="Mte-68-6OZ"/>
+                        <outlet property="label2" destination="6J8-Da-jDa" id="Thu-sP-96S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -14,15 +14,13 @@
 @property (nonatomic, assign) NSUInteger startLocation;
 @property (nonatomic, assign) NSUInteger endLocation;
 @property (nonatomic, strong) NSString *value;
-@property (nonatomic, strong) UIFont *regularFont;
-@property (nonatomic, strong) UIFont *boldFont;
 @property (nonatomic, strong, readonly) NSString *startTag;
 @property (nonatomic, strong, readonly) NSString *endTag;
 @property (nonatomic, assign, readonly) NSRange range;
 @property (nonatomic, strong, readonly) NSMutableArray *attributeNames;
 @property (nonatomic, strong, readonly) NSMutableArray *attributeValues;
 
-- (instancetype)initFromString:(NSString *)stringContainingTag;
+- (instancetype)initFromString:(NSString *)stringContainingTag regularFont:(UIFont *)regularFont boldFont:(UIFont *)boldFont smallFont:(UIFont *)smallFont;
 
 @end
 

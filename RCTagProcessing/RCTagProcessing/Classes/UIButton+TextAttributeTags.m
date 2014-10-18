@@ -13,27 +13,34 @@
 @implementation UIButton (TextAttributeTags)
 
 - (void)rc_setTaggedTitle:(NSString *)titleWithTags forState:(UIControlState)state {
-    [self rc_setTaggedTitle:titleWithTags forState:state fontForBold:nil];
+    [self rc_setTaggedTitle:titleWithTags forState:state fontForBold:nil smallFont:nil];
 }
 
-- (void)rc_setTaggedTitle:(NSString *)titleWithTags forState:(UIControlState)state fontForBold:(UIFont *)boldFont {
+- (void)rc_setTaggedTitle:(NSString *)titleWithTags forState:(UIControlState)state fontForBold:(UIFont *)boldFont smallFont:(UIFont *)smallFont {
     UIFont *selfBoldFont = boldFont;
     if (!selfBoldFont) {
         selfBoldFont = [self.titleLabel.font rc_boldFont];
     }
     
-    NSAttributedString *attributedString = [RCTagProcessor attributedStringForText:titleWithTags withRegularFont:self.titleLabel.font andBoldFont:selfBoldFont];
+    UIFont *selfSmallFont = smallFont;
+    if (!selfSmallFont) {
+        selfSmallFont = [UIFont fontWithName:self.titleLabel.font.fontName size:self.titleLabel.font.pointSize * 0.75];
+    }
+    
+    NSAttributedString *attributedString = [RCTagProcessor attributedStringForText:titleWithTags withRegularFont:self.titleLabel.font boldFont:selfBoldFont andSmallFont:selfSmallFont];
     
     [self setAttributedTitle:attributedString forState:state];
 }
 
 - (void)rc_setTaggedTitleForAllStates:(NSString *)titleWithTags {
-    [self rc_setTaggedTitleForAllStates:titleWithTags fontForBold:nil];
+    [self rc_setTaggedTitleForAllStates:titleWithTags fontForBold:nil smallFont:nil];
 }
 
-- (void)rc_setTaggedTitleForAllStates:(NSString *)titleWithTags fontForBold:(UIFont *)boldFont {
-    NSAttributedString *attributedTitle = [RCTagProcessor attributedStringForText:titleWithTags];
-    [self setAttributedTitle:attributedTitle forState:UIControlStateNormal];
+- (void)rc_setTaggedTitleForAllStates:(NSString *)titleWithTags fontForBold:(UIFont *)boldFont smallFont:(UIFont *)smallFont {
+    //Parse once, grab title and set to other states
+    [self rc_setTaggedTitle:titleWithTags forState:UIControlStateNormal fontForBold:boldFont smallFont:smallFont];
+    NSAttributedString *attributedTitle = [self attributedTitleForState:UIControlStateNormal];
+    
     [self setAttributedTitle:attributedTitle forState:UIControlStateHighlighted];
     [self setAttributedTitle:attributedTitle forState:UIControlStateDisabled];
     [self setAttributedTitle:attributedTitle forState:UIControlStateSelected];

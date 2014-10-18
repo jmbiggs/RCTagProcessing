@@ -10,7 +10,7 @@
 
 @interface UILabel (TextAttributeTags)
 
-- (void)rc_setTaggedText:(NSString *)textWithTags fontForBold:(UIFont *)boldFont;
+- (void)rc_setTaggedText:(NSString *)textWithTags fontForBold:(UIFont *)boldFont smallFont:(UIFont *)smallFont;
 
 //Convenience:
 - (void)rc_setTaggedText:(NSString *)textWithTags;

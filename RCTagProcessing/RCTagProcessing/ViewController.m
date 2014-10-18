@@ -9,10 +9,12 @@
 #import "ViewController.h"
 #import "UIButton+TextAttributeTags.h"
 #import "UILabel+TextAttributeTags.h"
+#import "RCTagProcessor.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UIButton *button;
+@property (weak, nonatomic) IBOutlet UILabel *label2;
 
 @end
 
@@ -26,6 +28,8 @@
     [self.label rc_setTaggedText:stringWithTags];
     [self.button rc_setTaggedTitle:stringWithTags forState:UIControlStateNormal];
     
+    //To showcae generating attributed directly
+    self.label2.attributedText = [RCTagProcessor attributedStringForText:stringWithTags];
 }
 
 - (void)didReceiveMemoryWarning {

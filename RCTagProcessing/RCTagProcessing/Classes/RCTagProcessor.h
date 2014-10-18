@@ -11,12 +11,11 @@
 
 @interface RCTagProcessor : NSObject
 
++ (UIFont *)kRegularFont;
 + (UIFont *)kBoldFont;
 + (UIFont *)kSmallFont;
-+ (CGFloat)kSupOffset;
-+ (CGFloat)kSubOffset;
 
-+ (NSAttributedString *)attributedStringForText:(NSString *)plainText withRegularFont:(UIFont *)regularFont andBoldFont:(UIFont *)boldFont;
++ (NSAttributedString *)attributedStringForText:(NSString *)plainText withRegularFont:(UIFont *)regularFont boldFont:(UIFont *)boldFont andSmallFont:(UIFont *)smallFont ;
 
 //Convenience
 + (NSAttributedString *)attributedStringForText:(NSString *)plainText;

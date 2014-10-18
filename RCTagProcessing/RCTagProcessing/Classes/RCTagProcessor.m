@@ -12,12 +12,24 @@
 @implementation RCTagProcessor
 
 + (NSAttributedString *)attributedStringForText:(NSString *)plainText {
-    return [self attributedStringForText:plainText withRegularFont:nil andBoldFont:nil];
+    return [self attributedStringForText:plainText withRegularFont:nil boldFont:nil andSmallFont:nil];
 }
 
-+ (NSAttributedString *)attributedStringForText:(NSString *)plainText withRegularFont:(UIFont *)regularFont andBoldFont:(UIFont *)boldFont {
++ (NSAttributedString *)attributedStringForText:(NSString *)plainText withRegularFont:(UIFont *)regularFont boldFont:(UIFont *)boldFont andSmallFont:(UIFont *)smallFont {
     if (!plainText) {
         return nil;
+    }
+    
+    if (!regularFont) {
+        regularFont = [self kRegularFont];
+    }
+    
+    if (!boldFont) {
+        boldFont = [self kBoldFont];
+    }
+    
+    if (!smallFont) {
+        smallFont = [self kSmallFont];
     }
     
     NSError *error;
@@ -29,9 +41,7 @@
     NSTextCheckingResult *match = nil;
     
     while ((match = [regex firstMatchInString:plainText options:0 range:NSMakeRange(0, plainText.length)])) {
-        HTMLTag *tag = [[HTMLTag alloc] initFromString:[plainText substringWithRange:match.range]];
-        tag.regularFont = regularFont;
-        tag.boldFont = boldFont;
+        HTMLTag *tag = [[HTMLTag alloc] initFromString:[plainText substringWithRange:match.range] regularFont:regularFont boldFont:boldFont smallFont:smallFont];
         tag.startLocation = match.range.location;
         
         plainText = [plainText stringByReplacingCharactersInRange:match.range withString:@""];
@@ -55,6 +65,14 @@
     return attributedText;
 }
 
++ (UIFont *)kRegularFont {
+    static UIFont *regularFontConstant = nil;
+    if (!regularFontConstant) {
+        regularFontConstant = [UIFont systemFontOfSize:10.42];
+    }
+    return regularFontConstant;
+}
+
 + (UIFont *)kBoldFont {
     static UIFont *boldFontConstant = nil;
     if (!boldFontConstant) {
@@ -66,18 +84,9 @@
 + (UIFont *)kSmallFont {
     static UIFont *smallFontConstant = nil;
     if (!smallFontConstant) {
-        smallFontConstant = [UIFont boldSystemFontOfSize:5.42];
+        smallFontConstant = [UIFont systemFontOfSize:5.42];
     }
     return smallFontConstant;
-}
-
-
-+ (CGFloat)kSupOffset {
-    return 10.42;
-}
-
-+ (CGFloat)kSubOffset {
-    return -[self kSupOffset]/2;
 }
 
 @end
