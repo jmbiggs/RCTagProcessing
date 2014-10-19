@@ -60,6 +60,11 @@
 }
 
 - (NSArray *)getTagsFromString:(NSString *)stringWithTags {
+    if (stringWithTags.length == 0) {
+        //not an error, but avoids throwing an exception from the regex matching
+        return @[];
+    }
+    
     NSError *error;
     NSString *regexMatchingStartOrEndTags = @"<\\/?[A-Z][A-Z0-9]*>";
     
@@ -97,6 +102,13 @@
         }
 
         stringWithTags = [stringWithTags stringByReplacingCharactersInRange:match.range withString:@""];
+    }
+    
+    if (tagsQueue.count > 0) {
+        NSLog(@"Reached end of string with %ld tags still open. Recovering by closing all pending tags", (long)tagsQueue.count);
+        for (HTMLTag *tag in tagsQueue) {
+            tag.endLocation = stringWithTags.length;
+        }
     }
 
     return tagsArray;

@@ -18,9 +18,12 @@
 //Convenience
 - (NSAttributedString *)attributedStringForText:(NSString *)plainText;
 
-//Fallback values
+//Fallback values. Consider converting to properties
 - (UIFont *)regularFont;
 - (UIFont *)boldFont;
 - (UIFont *)smallFont;
+
+//Tag processing. Public for the sake of testability
+- (NSArray *)getTagsFromString:(NSString *)stringWithTags;
 
 @end

@@ -18,7 +18,7 @@ extern const CGFloat rc_defaultObliquenessOffsetFactor;
 
 /**
  *  Currently supported tags:
- *  <b>, <u>, <i>, <sup>, <sub>, <strike>
+ *  <b>, <u>, <i>, <sup>, <sub>, <strike>, <small>
  */
 
 @interface HTMLTag : NSObject
@@ -39,6 +39,8 @@ extern const CGFloat rc_defaultObliquenessOffsetFactor;
 @property (nonatomic, assign) CGFloat obliquenessFactor;
 
 - (instancetype)initFromString:(NSString *)stringContainingTag;
+
+- (BOOL)isEqual:(HTMLTag *)compareTo considerLocation:(BOOL)shouldCompareLocation;
 
 @end
 

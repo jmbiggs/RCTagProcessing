@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		852B6C1D19F2BC8500534963 /* HTMLTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 852B6C1C19F2BC8500534963 /* HTMLTag.m */; };
 		852B6C2019F3FCD100534963 /* NSString+TagSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 852B6C1F19F3FCD100534963 /* NSString+TagSupport.m */; };
+		852B6C2219F4093100534963 /* RCTagProcessorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 852B6C2119F4093100534963 /* RCTagProcessorTests.m */; };
 		853860DD19E9730300475EC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 853860DC19E9730300475EC1 /* main.m */; };
 		853860E019E9730300475EC1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 853860DF19E9730300475EC1 /* AppDelegate.m */; };
 		853860E319E9730300475EC1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 853860E219E9730300475EC1 /* ViewController.m */; };
 		853860E619E9730300475EC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 853860E419E9730300475EC1 /* Main.storyboard */; };
 		853860E819E9730300475EC1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 853860E719E9730300475EC1 /* Images.xcassets */; };
 		853860EB19E9730300475EC1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 853860E919E9730300475EC1 /* LaunchScreen.xib */; };
-		853860F719E9730300475EC1 /* RCTagProcessingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 853860F619E9730300475EC1 /* RCTagProcessingTests.m */; };
+		853860F719E9730300475EC1 /* HTMLTagTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 853860F619E9730300475EC1 /* HTMLTagTests.m */; };
 		8538610619E9A23600475EC1 /* UILabel+TextAttributeTags.m in Sources */ = {isa = PBXBuildFile; fileRef = 8538610519E9A23600475EC1 /* UILabel+TextAttributeTags.m */; };
 		8538610919E9A2CB00475EC1 /* UIButton+TextAttributeTags.m in Sources */ = {isa = PBXBuildFile; fileRef = 8538610819E9A2CB00475EC1 /* UIButton+TextAttributeTags.m */; };
 		8538610C19E9A2FF00475EC1 /* RCTagProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8538610B19E9A2FF00475EC1 /* RCTagProcessor.m */; };
@@ -37,6 +38,7 @@
 		852B6C1C19F2BC8500534963 /* HTMLTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLTag.m; sourceTree = "<group>"; };
 		852B6C1E19F3FCD100534963 /* NSString+TagSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TagSupport.h"; sourceTree = "<group>"; };
 		852B6C1F19F3FCD100534963 /* NSString+TagSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TagSupport.m"; sourceTree = "<group>"; };
+		852B6C2119F4093100534963 /* RCTagProcessorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTagProcessorTests.m; sourceTree = "<group>"; };
 		853860D719E9730300475EC1 /* RCTagProcessing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RCTagProcessing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		853860DB19E9730300475EC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		853860DC19E9730300475EC1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -49,7 +51,7 @@
 		853860EA19E9730300475EC1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		853860F019E9730300475EC1 /* RCTagProcessingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RCTagProcessingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		853860F519E9730300475EC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		853860F619E9730300475EC1 /* RCTagProcessingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTagProcessingTests.m; sourceTree = "<group>"; };
+		853860F619E9730300475EC1 /* HTMLTagTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTMLTagTests.m; sourceTree = "<group>"; };
 		8538610419E9A23600475EC1 /* UILabel+TextAttributeTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+TextAttributeTags.h"; sourceTree = "<group>"; };
 		8538610519E9A23600475EC1 /* UILabel+TextAttributeTags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+TextAttributeTags.m"; sourceTree = "<group>"; };
 		8538610719E9A2CB00475EC1 /* UIButton+TextAttributeTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+TextAttributeTags.h"; sourceTree = "<group>"; };
@@ -124,7 +126,8 @@
 		853860F319E9730300475EC1 /* RCTagProcessingTests */ = {
 			isa = PBXGroup;
 			children = (
-				853860F619E9730300475EC1 /* RCTagProcessingTests.m */,
+				853860F619E9730300475EC1 /* HTMLTagTests.m */,
+				852B6C2119F4093100534963 /* RCTagProcessorTests.m */,
 				853860F419E9730300475EC1 /* Supporting Files */,
 			);
 			path = RCTagProcessingTests;
@@ -273,7 +276,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				853860F719E9730300475EC1 /* RCTagProcessingTests.m in Sources */,
+				852B6C2219F4093100534963 /* RCTagProcessorTests.m in Sources */,
+				853860F719E9730300475EC1 /* HTMLTagTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
