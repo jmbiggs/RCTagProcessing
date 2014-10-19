@@ -15,9 +15,6 @@
 @property (nonatomic, strong, readwrite) NSMutableArray *attributeNames;
 @property (nonatomic, strong, readwrite) NSMutableArray *attributeValues;
 @property (nonatomic, assign) BOOL namesAndValuesObsoleted;
-@property (nonatomic, strong) UIFont *regularFont;
-@property (nonatomic, strong) UIFont *boldFont;
-@property (nonatomic, strong) UIFont *smallFont;
 
 @end
 
@@ -27,7 +24,7 @@ const CGFloat rc_defaultSuperscriptOffsetFactor = 0.5;
 const CGFloat rc_defaultSubscriptOffsetFactor = 0.25;
 const CGFloat rc_defaultObliquenessOffsetFactor = 0.33;
 
-- (instancetype)initFromString:(NSString *)stringContainingTag regularFont:(UIFont *)regularFont boldFont:(UIFont *)boldFont smallFont:(UIFont *)smallFont {
+- (instancetype)initFromString:(NSString *)stringContainingTag {
     self = [super init];
     if (self) {
         //TODO: add support for parametrized tags (e.g. <font color=red>)
@@ -39,11 +36,7 @@ const CGFloat rc_defaultObliquenessOffsetFactor = 0.33;
         _superscriptOffsetFactor = rc_defaultSuperscriptOffsetFactor;
         _subscriptOffsetFactor = rc_defaultSubscriptOffsetFactor;
         _obliquenessFactor = rc_defaultObliquenessOffsetFactor;
-        _regularFont = regularFont;
-        _boldFont = boldFont;
-        _smallFont = smallFont;
         _namesAndValuesObsoleted = YES;
-        [self setUpAttributeNamesAndValues];
     }
     return self;
 }
@@ -93,6 +86,21 @@ const CGFloat rc_defaultObliquenessOffsetFactor = 0.33;
 
 - (void)setObliquenessFactor:(CGFloat)obliquenessFactor {
     _obliquenessFactor = obliquenessFactor;
+    _namesAndValuesObsoleted = YES;
+}
+
+- (void)setRegularFont:(UIFont *)regularFont {
+    _regularFont = regularFont;
+    _namesAndValuesObsoleted = YES;
+}
+
+- (void)setBoldFont:(UIFont *)boldFont {
+    _boldFont = boldFont;
+    _namesAndValuesObsoleted = YES;
+}
+
+- (void)setSmallFont:(UIFont *)smallFont {
+    _smallFont = smallFont;
     _namesAndValuesObsoleted = YES;
 }
 

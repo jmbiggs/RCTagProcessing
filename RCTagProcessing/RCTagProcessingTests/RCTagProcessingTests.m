@@ -29,10 +29,10 @@
 - (void)testHTMLTag {
     HTMLTag *tag = nil;
     
-    XCTAssertThrows([[HTMLTag alloc] initFromString:nil regularFont:nil boldFont:nil smallFont:nil]);
-    XCTAssertThrows([[HTMLTag alloc] initFromString:@"" regularFont:nil boldFont:nil smallFont:nil]);
+    XCTAssertThrows([[HTMLTag alloc] initFromString:nil]);
+    XCTAssertThrows([[HTMLTag alloc] initFromString:@""]);
     
-    tag = [[HTMLTag alloc] initFromString:@"<unknownTag>" regularFont:[UIFont fontWithName:@"CourierNew" size:13] boldFont:[UIFont fontWithName:@"CourierNew-Bold" size:13] smallFont:[UIFont fontWithName:@"CourierNew" size:6]];
+    tag = [[HTMLTag alloc] initFromString:@"<unknownTag>"];
     
     XCTAssertEqualObjects(tag.value, @"unknownTag");
     XCTAssertEqual(tag.attributeNames.count, 0);
@@ -59,7 +59,10 @@
 - (void)testHTMLTag_bold {
     
     UIFont *boldFont = [UIFont fontWithName:@"Courier-Bold" size:13];
-    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<b>" regularFont:[UIFont fontWithName:@"Courier" size:13] boldFont:boldFont smallFont:[UIFont fontWithName:@"Courier" size:6]];
+    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<b>"];
+    tag.regularFont = [UIFont fontWithName:@"Courier" size:13];
+    tag.boldFont = boldFont;
+    tag.smallFont = [UIFont fontWithName:@"Courier" size:6];
     
     XCTAssertEqualObjects(tag.value, @"b");
     XCTAssertEqual(tag.attributeNames.count, 1);
@@ -72,7 +75,10 @@
 
 - (void)testHTMLTag_underline {
 
-    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<u>" regularFont:[UIFont fontWithName:@"Courier" size:13] boldFont:[UIFont fontWithName:@"Courier-Bold" size:13] smallFont:[UIFont fontWithName:@"Courier" size:6]];
+    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<u>"];
+    tag.regularFont = [UIFont fontWithName:@"Courier" size:13];
+    tag.boldFont = [UIFont fontWithName:@"Courier-Bold" size:13];
+    tag.smallFont = [UIFont fontWithName:@"Courier" size:6];
 
     XCTAssertEqualObjects(tag.value, @"u");
     XCTAssertEqual(tag.attributeNames.count, 1);
@@ -84,7 +90,10 @@
 }
 
 - (void)testHTMLTag_italic {
-    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<i>" regularFont:[UIFont fontWithName:@"Courier" size:13] boldFont:[UIFont fontWithName:@"Courier-Bold" size:13] smallFont:[UIFont fontWithName:@"Courier" size:6]];
+    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<i>"];
+    tag.regularFont = [UIFont fontWithName:@"Courier" size:13];
+    tag.boldFont = [UIFont fontWithName:@"Courier-Bold" size:13];
+    tag.smallFont = [UIFont fontWithName:@"Courier" size:6];
     
     XCTAssertEqualObjects(tag.value, @"i");
     XCTAssertEqual(tag.attributeNames.count, 1);
@@ -99,7 +108,10 @@
     
     UIFont *smallFont = [UIFont fontWithName:@"Courier" size:6];
     UIFont *regularFont = [UIFont fontWithName:@"Courier" size:13];
-    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<sup>" regularFont:regularFont boldFont:[UIFont fontWithName:@"Courier-Bold" size:13] smallFont:smallFont];
+    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<sup>"];
+    tag.regularFont = regularFont;
+    tag.boldFont = [UIFont fontWithName:@"Courier-Bold" size:13];
+    tag.smallFont = smallFont;
     tag.superscriptOffsetFactor = 0.4;
     
     XCTAssertEqualObjects(tag.value, @"sup");
@@ -116,7 +128,11 @@
 - (void)testHTMLTag_subscript {
     UIFont *smallFont = [UIFont fontWithName:@"Courier" size:6];
     UIFont *regularFont = [UIFont fontWithName:@"Courier" size:13];
-    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<sub>" regularFont:regularFont boldFont:[UIFont fontWithName:@"Courier-Bold" size:13] smallFont:smallFont];
+    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<sub>"];
+    tag.regularFont = regularFont;
+    tag.boldFont = [UIFont fontWithName:@"Courier-Bold" size:13];
+    tag.smallFont = smallFont;
+    
     tag.subscriptOffsetFactor = 0.4;
     
     XCTAssertEqualObjects(tag.value, @"sub");
@@ -131,7 +147,7 @@
 }
 
 - (void)testHTMLTag_striketrhough {
-    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<strike>" regularFont:[UIFont fontWithName:@"Courier" size:13] boldFont:[UIFont fontWithName:@"Courier-Bold" size:13] smallFont:[UIFont fontWithName:@"Courier" size:6]];
+    HTMLTag *tag = [[HTMLTag alloc] initFromString:@"<strike>"];
     
     XCTAssertEqualObjects(tag.value, @"strike");
     XCTAssertEqual(tag.attributeNames.count, 1);
@@ -142,21 +158,38 @@
     XCTAssertEqualObjects([tag.attributeValues objectAtIndex:0], [NSNumber numberWithInt:1]);
 }
 
-- (void)testHTMLTagPerformance {
-
-    UIFont *smallFont = [UIFont fontWithName:@"Courier" size:6];
-    UIFont *regularFont = [UIFont fontWithName:@"Courier" size:13];
-    UIFont *boldFont = [UIFont fontWithName:@"Courier-Bold" size:13];
+- (void)testHTMLTag_performance {
     NSString *string = @"<u>";
     
     //Baseline for 100k allocations: 0.257s
     //on a 2011, 2.2 GHz Core i7 Macbook Pro
     [self measureBlock:^{
-        //reducing allocations to 1000 to shorten the test
-        for (int i = 0; i < 1000; i++) {
-            HTMLTag *tag = [[HTMLTag alloc] initFromString:string regularFont:regularFont boldFont:boldFont smallFont:smallFont];
+        //reducing allocations to 10000 to shorten the test
+        for (int i = 0; i < 10000; i++) {
+            HTMLTag *tag = [[HTMLTag alloc] initFromString:string];
+            tag = nil; //disable 'unused variable' warning
+        }
+    }];
+    
+
+}
+
+- (void)testHTMLTag_ {
+    UIFont *smallFont = [UIFont fontWithName:@"Courier" size:6];
+    UIFont *regularFont = [UIFont fontWithName:@"Courier" size:13];
+    UIFont *boldFont = [UIFont fontWithName:@"Courier-Bold" size:13];
+    NSString *string = @"<u>";
+    
+    [self measureBlock:^{
+        for (int i = 0; i < 10000; i++) {
+            HTMLTag *tag = [[HTMLTag alloc] initFromString:string];
+            tag.regularFont = regularFont;
+            tag.boldFont = boldFont;
+            tag.smallFont = smallFont;
+            
+            NSArray *array = tag.attributeNames;
+            array = tag.attributeNames;
         }
     }];
 }
-
 @end

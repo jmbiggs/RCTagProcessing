@@ -41,38 +41,56 @@
     if (!smallFont) {
         smallFont = [self smallFont];
     }
-    
-    NSError *error;
-    NSString *regexMatchingStartTags = @"<[A-Z][A-Z0-9]*>";
-    
-    NSMutableArray *tagsArray = [@[] mutableCopy];
-    
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexMatchingStartTags options:NSRegularExpressionCaseInsensitive error:&error];
-    NSTextCheckingResult *match = nil;
-    
-    while ((match = [regex firstMatchInString:plainText options:0 range:NSMakeRange(0, plainText.length)])) {
-        HTMLTag *tag = [[HTMLTag alloc] initFromString:[plainText substringWithRange:match.range] regularFont:regularFont boldFont:boldFont smallFont:smallFont];
-        tag.startLocation = match.range.location;
-        
-        plainText = [plainText stringByReplacingCharactersInRange:match.range withString:@""];
-        
-        NSRange range = [plainText rangeOfString:tag.endTag];
-        if (range.location != NSNotFound) {
-            tag.endLocation = range.location;
-            plainText = [plainText stringByReplacingCharactersInRange:range withString:@""];
-        }
-        [tagsArray addObject:tag];
-    }
-    
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:plainText];
 
+    NSArray *tagsArray = [self getTagsFromString:plainText];
+    plainText = [self removeTagsFromString:plainText];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:plainText];
+    
     for (HTMLTag *tag in tagsArray) {
+        tag.regularFont = regularFont;
+        tag.boldFont = boldFont;
+        tag.smallFont = smallFont;
         for (int i = 0; i < tag.attributeNames.count;i++) {
             [attributedText addAttribute:[tag.attributeNames objectAtIndex:i] value:[tag.attributeValues objectAtIndex:i] range:tag.range];
         }
     }
     
     return attributedText;
+}
+
+- (NSArray *)getTagsFromString:(NSString *)stringWithTags {
+    NSError *error;
+    NSString *regexMatchingStartOrEndTags = @"<[A-Z][A-Z0-9]*>";
+    
+    NSMutableArray *tagsArray = [@[] mutableCopy];
+//    NSMutableArray *tagsQueue = [@[] mutableCopy];
+    
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexMatchingStartOrEndTags options:NSRegularExpressionCaseInsensitive error:&error];
+    NSTextCheckingResult *match = nil;
+    
+    while ((match = [regex firstMatchInString:stringWithTags options:0 range:NSMakeRange(0, stringWithTags.length)])) {
+        NSString *tagString = [stringWithTags substringWithRange:match.range];
+        HTMLTag *tag = [[HTMLTag alloc] initFromString:tagString];
+        tag.startLocation = match.range.location;
+        
+        stringWithTags = [stringWithTags stringByReplacingCharactersInRange:match.range withString:@""];
+        
+        NSRange range = [stringWithTags rangeOfString:tag.endTag];
+        if (range.location != NSNotFound) {
+            tag.endLocation = range.location;
+            stringWithTags = [stringWithTags stringByReplacingCharactersInRange:range withString:@""];
+        }
+        [tagsArray addObject:tag];
+    }
+
+    return tagsArray;
+}
+
+- (NSString *)removeTagsFromString:(NSString *)stringWithTags {
+    NSError *error;
+    NSString *regexMatchingStartOrEndTags = @"<\\/?[A-Z][A-Z0-9]*>";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexMatchingStartOrEndTags options:NSRegularExpressionCaseInsensitive error:&error];
+    return [regex stringByReplacingMatchesInString:stringWithTags options:0 range:NSMakeRange(0, [stringWithTags length]) withTemplate:@""];
 }
 
 - (UIFont *)regularFont {

@@ -29,13 +29,16 @@ extern const CGFloat rc_defaultObliquenessOffsetFactor;
 @property (nonatomic, strong, readonly) NSString *startTag;
 @property (nonatomic, strong, readonly) NSString *endTag;
 @property (nonatomic, assign, readonly) NSRange range;
+@property (nonatomic, strong) UIFont *regularFont;
+@property (nonatomic, strong) UIFont *boldFont;
+@property (nonatomic, strong) UIFont *smallFont;
 @property (nonatomic, strong, readonly) NSMutableArray *attributeNames;
 @property (nonatomic, strong, readonly) NSMutableArray *attributeValues;
 @property (nonatomic, assign) CGFloat superscriptOffsetFactor;
 @property (nonatomic, assign) CGFloat subscriptOffsetFactor;
 @property (nonatomic, assign) CGFloat obliquenessFactor;
 
-- (instancetype)initFromString:(NSString *)stringContainingTag regularFont:(UIFont *)regularFont boldFont:(UIFont *)boldFont smallFont:(UIFont *)smallFont;
+- (instancetype)initFromString:(NSString *)stringContainingTag;
 
 @end
 
