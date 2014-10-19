@@ -6,4 +6,4 @@ HTML-like text formatting tag processing for UILabels and UIButtons, similar to 
 
 Currently supported tags are:
 
-<b>, <u>, <i>, <sup>, <sub>, <strike>, <small>
+&lt;b&gt;, &lt;u&gt;, &lt;i&gt;, &lt;sup&gt;, &lt;sub&gt;, &lt;strike&gt;, &lt;small&gt;
