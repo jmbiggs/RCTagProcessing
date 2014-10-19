@@ -190,6 +190,24 @@
     XCTAssertTrue([attributedString isEqualToAttributedString:expectedResult]);
 }
 
+- (void)testPerformance_attributedStringForText {
+    
+    NSMutableString *stringWithTags = [@"" mutableCopy];
+    for (int i = 0; i < 100; i++) {
+        [stringWithTags appendFormat:@"<b>asdf</b>"];
+    }
+    UIFont *smallFont = [UIFont systemFontOfSize:10];
+    UIFont *regularFont = [UIFont systemFontOfSize:15];
+    UIFont *boldFont = [UIFont boldSystemFontOfSize:15];
+    
+    [self measureBlock:^{
+        for (int i = 0; i < 10; i++) {
+            NSAttributedString *attributedString = [[RCTagProcessor defaultInstance] attributedStringForText:stringWithTags withRegularFont:regularFont boldFont:boldFont andSmallFont:smallFont];
+            attributedString = nil;
+        }
+    }];
+}
+
 - (void)testPerformance_parseSerialTags {
     NSMutableString *string = [@"" mutableCopy];
     for (int i = 0; i < 1000; i++) {
