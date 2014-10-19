@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *stringWithTags = @"<b>Bold</b><sup>sup</sup><sub>sub</sub><u>Underline</u><strike>strike</strike><i>Italic</i>";
+    NSString *stringWithTags = @"<b>Bold</b><sup>sup</sup><sub>sub</sub><u>Underline</u><strike>strike</strike><i>Italic</i><b><u>ub</u></b>";
     
     [self.label rc_setTaggedText:stringWithTags];
     [self.button rc_setTaggedTitle:stringWithTags forState:UIControlStateNormal];

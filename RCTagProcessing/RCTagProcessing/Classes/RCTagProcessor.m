@@ -60,27 +60,31 @@
 
 - (NSArray *)getTagsFromString:(NSString *)stringWithTags {
     NSError *error;
-    NSString *regexMatchingStartOrEndTags = @"<[A-Z][A-Z0-9]*>";
+    NSString *regexMatchingStartOrEndTags = @"<\\/?[A-Z][A-Z0-9]*>";
     
     NSMutableArray *tagsArray = [@[] mutableCopy];
-//    NSMutableArray *tagsQueue = [@[] mutableCopy];
+    NSMutableArray *tagsQueue = [@[] mutableCopy];
     
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexMatchingStartOrEndTags options:NSRegularExpressionCaseInsensitive error:&error];
     NSTextCheckingResult *match = nil;
     
     while ((match = [regex firstMatchInString:stringWithTags options:0 range:NSMakeRange(0, stringWithTags.length)])) {
         NSString *tagString = [stringWithTags substringWithRange:match.range];
+        if (tagsQueue.count > 0) {
+            HTMLTag *currentTag = tagsQueue.lastObject;
+            if ([tagString isEqualToString:currentTag.endTag]) {
+                currentTag.endLocation = match.range.location;
+                [tagsQueue removeLastObject]; //pop from queue
+                stringWithTags = [stringWithTags stringByReplacingCharactersInRange:match.range withString:@""];
+                continue;
+            }
+        }
+
         HTMLTag *tag = [[HTMLTag alloc] initFromString:tagString];
         tag.startLocation = match.range.location;
-        
         stringWithTags = [stringWithTags stringByReplacingCharactersInRange:match.range withString:@""];
-        
-        NSRange range = [stringWithTags rangeOfString:tag.endTag];
-        if (range.location != NSNotFound) {
-            tag.endLocation = range.location;
-            stringWithTags = [stringWithTags stringByReplacingCharactersInRange:range withString:@""];
-        }
         [tagsArray addObject:tag];
+        [tagsQueue addObject:tag]; //push to queue
     }
 
     return tagsArray;
