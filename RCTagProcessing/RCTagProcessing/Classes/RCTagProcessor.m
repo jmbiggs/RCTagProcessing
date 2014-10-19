@@ -44,7 +44,7 @@
     }
 
     NSArray *tagsArray = [self getTagsFromString:plainText];
-    plainText = [plainText stringByRemovingTags];
+    plainText = [plainText rc_stringByRemovingTags];
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:plainText];
     
     for (HTMLTag *tag in tagsArray) {
@@ -77,7 +77,7 @@
     while ((match = [regex firstMatchInString:stringWithTags options:0 range:NSMakeRange(0, stringWithTags.length)])) {
         NSString *tagString = [stringWithTags substringWithRange:match.range];
         
-        if ([tagString isClosingTag]) {
+        if ([tagString rc_isClosingTag]) {
             if (tagsQueue.count == 0) {
                 NSLog(@"Closing tag %@ found without any opening tag", tagString);
                 return nil;
@@ -91,7 +91,7 @@
                 [tagsQueue removeLastObject]; //pop from queue
 
             }
-        } else if ([tagString isOpeningTag]) {
+        } else if ([tagString rc_isOpeningTag]) {
             HTMLTag *tag = [[HTMLTag alloc] initFromString:tagString];
             tag.startLocation = match.range.location;
             [tagsArray addObject:tag];

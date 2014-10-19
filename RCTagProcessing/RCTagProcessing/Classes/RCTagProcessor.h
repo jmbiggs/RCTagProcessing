@@ -15,7 +15,7 @@
 
 - (NSAttributedString *)attributedStringForText:(NSString *)plainText withRegularFont:(UIFont *)regularFont boldFont:(UIFont *)boldFont andSmallFont:(UIFont *)smallFont ;
 
-//Convenience
+//Convenience. Will use defaults. Be prepared to post-process the text later
 - (NSAttributedString *)attributedStringForText:(NSString *)plainText;
 
 //Fallback values. Consider converting to properties

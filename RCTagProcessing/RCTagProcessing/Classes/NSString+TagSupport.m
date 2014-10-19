@@ -18,27 +18,27 @@
     return (match.range.location == 0) && (match.range.length == self.length);
 }
 
-- (NSString *)stringByRemovingTags {
+- (NSString *)rc_stringByRemovingTags {
     NSError *error;
     NSString *regexMatchingStartOrEndTags = @"<\\/?[A-Z][A-Z0-9]*>";
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexMatchingStartOrEndTags options:NSRegularExpressionCaseInsensitive error:&error];
     return [regex stringByReplacingMatchesInString:self options:0 range:NSMakeRange(0, self.length) withTemplate:@""];
 }
 
-- (BOOL)isValidTag {
+- (BOOL)rc_isValidTag {
     NSString *regexMatchingStartOrEndTags = @"<\\/?[A-Z][A-Z0-9]*>";
 
     //TODO: add acceptance for self-closing tags
     return [self stringFullyMatchesRegexPattern:regexMatchingStartOrEndTags];
 }
 
-- (BOOL)isOpeningTag {
+- (BOOL)rc_isOpeningTag {
     NSString *regexMatchingStartTags = @"<[A-Z][A-Z0-9]*>";
 
     return [self stringFullyMatchesRegexPattern:regexMatchingStartTags];
 }
 
-- (BOOL)isClosingTag {
+- (BOOL)rc_isClosingTag {
     NSString *regexMatchingEndTags = @"<\\/[A-Z][A-Z0-9]*>";
 
     return [self stringFullyMatchesRegexPattern:regexMatchingEndTags];

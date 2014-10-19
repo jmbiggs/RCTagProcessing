@@ -10,9 +10,9 @@
 
 @interface NSString (TagSupport)
 
-- (NSString *)stringByRemovingTags;
-- (BOOL)isValidTag;
-- (BOOL)isOpeningTag;
-- (BOOL)isClosingTag;
+- (NSString *)rc_stringByRemovingTags;
+- (BOOL)rc_isValidTag;
+- (BOOL)rc_isOpeningTag;
+- (BOOL)rc_isClosingTag;
 
 @end

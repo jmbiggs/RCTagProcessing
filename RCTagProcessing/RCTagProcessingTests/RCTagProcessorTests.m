@@ -123,6 +123,73 @@
     XCTAssertNil([[RCTagProcessor defaultInstance] getTagsFromString:@"asdf<a>'</a>'</a>"]);
 }
 
+- (void)testAttributedStringForText {
+    NSString *stringWithTags = @"<b>Bold</b> <sup>sup</sup> <sub>sub</sub> <u>Underline</u> <strike>strike</strike> <i>Italic</i> <small>small</small> <b><u>Underline+Bold</u></b>";
+    NSAttributedString *attributedString = [[RCTagProcessor defaultInstance] attributedStringForText:stringWithTags];
+    NSMutableAttributedString *expectedResult = [[NSMutableAttributedString alloc] initWithString:@"Bold sup sub Underline strike Italic small Underline+Bold"];
+    //bold
+    [expectedResult addAttribute:NSFontAttributeName value:[[RCTagProcessor defaultInstance] boldFont] range:NSMakeRange(0, 4)];
+    //superscript
+    [expectedResult addAttribute:NSFontAttributeName value:[[RCTagProcessor defaultInstance] smallFont] range:NSMakeRange(5, 3)];
+    [expectedResult addAttribute:NSBaselineOffsetAttributeName value:[NSNumber numberWithFloat:rc_defaultSuperscriptOffsetFactor * [[RCTagProcessor defaultInstance] regularFont].pointSize] range:NSMakeRange(5, 3)];
+    //subscript
+    [expectedResult addAttribute:NSFontAttributeName value:[[RCTagProcessor defaultInstance] smallFont] range:NSMakeRange(9, 3)];
+    [expectedResult addAttribute:NSBaselineOffsetAttributeName value:[NSNumber numberWithFloat:-rc_defaultSubscriptOffsetFactor * [[RCTagProcessor defaultInstance] regularFont].pointSize] range:NSMakeRange(9, 3)];
+    //underline
+    [expectedResult addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:NSMakeRange(13, 9)];
+    //strikethrough
+    [expectedResult addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInt:1] range:NSMakeRange(23, 6)];
+    //italic
+    [expectedResult addAttribute:NSObliquenessAttributeName value:[NSNumber numberWithFloat:rc_defaultObliquenessOffsetFactor] range:NSMakeRange(30, 6)];
+    //small
+    [expectedResult addAttribute:NSFontAttributeName value:[[RCTagProcessor defaultInstance] smallFont] range:NSMakeRange(37, 5)];
+    //underline+bold
+    [expectedResult addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:NSMakeRange(43, 14)];
+    [expectedResult addAttribute:NSFontAttributeName value:[[RCTagProcessor defaultInstance] boldFont] range:NSMakeRange(43, 14)];
+    
+    XCTAssertTrue([attributedString isEqualToAttributedString:expectedResult]);
+
+    //Test closing opened tags
+    stringWithTags = @"<b>Bold</b> <sup>sup</sup> <sub>sub</sub> <u>Underline</u> <strike>strike</strike> <i>Italic</i> <small>small</small> <b><u>Underline+Bold";
+    attributedString = [[RCTagProcessor defaultInstance] attributedStringForText:stringWithTags];
+    XCTAssertTrue([attributedString isEqualToAttributedString:expectedResult]);
+}
+
+- (void)testAttributedStringForText_withParameters {
+    NSString *stringWithTags = @"<b>Bold</b> <sup>sup</sup> <sub>sub</sub> <u>Underline</u> <strike>strike</strike> <i>Italic</i> <small>small</small> <b><u>Underline+Bold</u></b>";
+    UIFont *smallFont = [UIFont systemFontOfSize:10];
+    UIFont *regularFont = [UIFont systemFontOfSize:15];
+    UIFont *boldFont = [UIFont boldSystemFontOfSize:15];
+    NSAttributedString *attributedString = [[RCTagProcessor defaultInstance] attributedStringForText:stringWithTags withRegularFont:regularFont boldFont:boldFont andSmallFont:smallFont];
+    NSMutableAttributedString *expectedResult = [[NSMutableAttributedString alloc] initWithString:@"Bold sup sub Underline strike Italic small Underline+Bold"];
+    //bold
+    [expectedResult addAttribute:NSFontAttributeName value:boldFont range:NSMakeRange(0, 4)];
+    //superscript
+    [expectedResult addAttribute:NSFontAttributeName value:smallFont range:NSMakeRange(5, 3)];
+    [expectedResult addAttribute:NSBaselineOffsetAttributeName value:[NSNumber numberWithFloat:rc_defaultSuperscriptOffsetFactor * regularFont.pointSize] range:NSMakeRange(5, 3)];
+    //subscript
+    [expectedResult addAttribute:NSFontAttributeName value:smallFont range:NSMakeRange(9, 3)];
+    [expectedResult addAttribute:NSBaselineOffsetAttributeName value:[NSNumber numberWithFloat:-rc_defaultSubscriptOffsetFactor * regularFont.pointSize] range:NSMakeRange(9, 3)];
+    //underline
+    [expectedResult addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:NSMakeRange(13, 9)];
+    //strikethrough
+    [expectedResult addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInt:1] range:NSMakeRange(23, 6)];
+    //italic
+    [expectedResult addAttribute:NSObliquenessAttributeName value:[NSNumber numberWithFloat:rc_defaultObliquenessOffsetFactor] range:NSMakeRange(30, 6)];
+    //small
+    [expectedResult addAttribute:NSFontAttributeName value:smallFont range:NSMakeRange(37, 5)];
+    //underline+bold
+    [expectedResult addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:NSMakeRange(43, 14)];
+    [expectedResult addAttribute:NSFontAttributeName value:boldFont range:NSMakeRange(43, 14)];
+    
+    XCTAssertTrue([attributedString isEqualToAttributedString:expectedResult]);
+    
+    //Test closing opened tags
+    stringWithTags = @"<b>Bold</b> <sup>sup</sup> <sub>sub</sub> <u>Underline</u> <strike>strike</strike> <i>Italic</i> <small>small</small> <b><u>Underline+Bold";
+    attributedString = [[RCTagProcessor defaultInstance] attributedStringForText:stringWithTags withRegularFont:regularFont boldFont:boldFont andSmallFont:smallFont];
+    XCTAssertTrue([attributedString isEqualToAttributedString:expectedResult]);
+}
+
 - (void)testPerformance_parseSerialTags {
     NSMutableString *string = [@"" mutableCopy];
     for (int i = 0; i < 1000; i++) {
