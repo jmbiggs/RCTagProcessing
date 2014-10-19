@@ -8,6 +8,7 @@
 
 #import "RCTagProcessor.h"
 #import "HTMLTag.h"
+#import "NSString+TagSupport.h"
 
 @implementation RCTagProcessor
 
@@ -43,7 +44,7 @@
     }
 
     NSArray *tagsArray = [self getTagsFromString:plainText];
-    plainText = [self removeTagsFromString:plainText];
+    plainText = [plainText stringByRemovingTags];
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:plainText];
     
     for (HTMLTag *tag in tagsArray) {
@@ -70,32 +71,37 @@
     
     while ((match = [regex firstMatchInString:stringWithTags options:0 range:NSMakeRange(0, stringWithTags.length)])) {
         NSString *tagString = [stringWithTags substringWithRange:match.range];
-        if (tagsQueue.count > 0) {
+        
+        if ([tagString isClosingTag]) {
+            if (tagsQueue.count == 0) {
+                NSLog(@"Closing tag %@ found without any opening tag", tagString);
+                return nil;
+            }
             HTMLTag *currentTag = tagsQueue.lastObject;
-            if ([tagString isEqualToString:currentTag.endTag]) {
+            if (![tagString isEqualToString:currentTag.endTag]) {
+                NSLog(@"Closing tag %@ doesn't match opening tag %@", tagString, currentTag.startTag);
+                return nil;
+            } else {
                 currentTag.endLocation = match.range.location;
                 [tagsQueue removeLastObject]; //pop from queue
-                stringWithTags = [stringWithTags stringByReplacingCharactersInRange:match.range withString:@""];
-                continue;
+
             }
+        } else if ([tagString isOpeningTag]) {
+            HTMLTag *tag = [[HTMLTag alloc] initFromString:tagString];
+            tag.startLocation = match.range.location;
+            [tagsArray addObject:tag];
+            [tagsQueue addObject:tag]; //push to queue
+        } else {
+            //Is this even possible?
+            [NSException raise:@"Invalid tag" format:@"%@ is neither an opening nor a closing tag", tagString];
         }
 
-        HTMLTag *tag = [[HTMLTag alloc] initFromString:tagString];
-        tag.startLocation = match.range.location;
         stringWithTags = [stringWithTags stringByReplacingCharactersInRange:match.range withString:@""];
-        [tagsArray addObject:tag];
-        [tagsQueue addObject:tag]; //push to queue
     }
 
     return tagsArray;
 }
 
-- (NSString *)removeTagsFromString:(NSString *)stringWithTags {
-    NSError *error;
-    NSString *regexMatchingStartOrEndTags = @"<\\/?[A-Z][A-Z0-9]*>";
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexMatchingStartOrEndTags options:NSRegularExpressionCaseInsensitive error:&error];
-    return [regex stringByReplacingMatchesInString:stringWithTags options:0 range:NSMakeRange(0, [stringWithTags length]) withTemplate:@""];
-}
 
 - (UIFont *)regularFont {
     static UIFont *regularFontConstant = nil;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		852B6C1D19F2BC8500534963 /* HTMLTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 852B6C1C19F2BC8500534963 /* HTMLTag.m */; };
+		852B6C2019F3FCD100534963 /* NSString+TagSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 852B6C1F19F3FCD100534963 /* NSString+TagSupport.m */; };
 		853860DD19E9730300475EC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 853860DC19E9730300475EC1 /* main.m */; };
 		853860E019E9730300475EC1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 853860DF19E9730300475EC1 /* AppDelegate.m */; };
 		853860E319E9730300475EC1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 853860E219E9730300475EC1 /* ViewController.m */; };
@@ -34,6 +35,8 @@
 /* Begin PBXFileReference section */
 		852B6C1B19F2BC8500534963 /* HTMLTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLTag.h; sourceTree = "<group>"; };
 		852B6C1C19F2BC8500534963 /* HTMLTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLTag.m; sourceTree = "<group>"; };
+		852B6C1E19F3FCD100534963 /* NSString+TagSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TagSupport.h"; sourceTree = "<group>"; };
+		852B6C1F19F3FCD100534963 /* NSString+TagSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TagSupport.m"; sourceTree = "<group>"; };
 		853860D719E9730300475EC1 /* RCTagProcessing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RCTagProcessing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		853860DB19E9730300475EC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		853860DC19E9730300475EC1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -144,6 +147,8 @@
 				8538610819E9A2CB00475EC1 /* UIButton+TextAttributeTags.m */,
 				8538610D19EAAB1200475EC1 /* UIFont+BoldFont.h */,
 				8538610E19EAAB1200475EC1 /* UIFont+BoldFont.m */,
+				852B6C1E19F3FCD100534963 /* NSString+TagSupport.h */,
+				852B6C1F19F3FCD100534963 /* NSString+TagSupport.m */,
 				8538610A19E9A2FF00475EC1 /* RCTagProcessor.h */,
 				8538610B19E9A2FF00475EC1 /* RCTagProcessor.m */,
 				852B6C1B19F2BC8500534963 /* HTMLTag.h */,
@@ -253,6 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8538610C19E9A2FF00475EC1 /* RCTagProcessor.m in Sources */,
+				852B6C2019F3FCD100534963 /* NSString+TagSupport.m in Sources */,
 				8538610919E9A2CB00475EC1 /* UIButton+TextAttributeTags.m in Sources */,
 				853860E319E9730300475EC1 /* ViewController.m in Sources */,
 				8538610F19EAAB1200475EC1 /* UIFont+BoldFont.m in Sources */,

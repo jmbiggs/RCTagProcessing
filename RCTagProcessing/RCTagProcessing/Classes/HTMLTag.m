@@ -29,10 +29,19 @@ const CGFloat rc_defaultObliquenessOffsetFactor = 0.33;
     if (self) {
         //TODO: add support for parametrized tags (e.g. <font color=red>)
         //TODO: add support for self-closed tags (e.g. </br>)
+        //too expensive to validate by regex
         if (stringContainingTag.length < 3) {
             [NSException raise:@"Invalid tag string" format:@"A valid tag must be at least 3 caracters long"];
         }
-        _value = [stringContainingTag substringWithRange:NSMakeRange(1, stringContainingTag.length - 2)];
+        if ([[stringContainingTag substringWithRange:NSMakeRange(1, 1)] isEqualToString:@"/"]) {
+            //closing tag, probably
+            if (stringContainingTag.length < 4) {
+                [NSException raise:@"Invalid tag string" format:@"A valid closing must be at least 4 caracters long"];
+            }
+            _value = [stringContainingTag substringWithRange:NSMakeRange(2, stringContainingTag.length - 3)];
+        } else {
+            _value = [stringContainingTag substringWithRange:NSMakeRange(1, stringContainingTag.length - 2)];
+        }
         _superscriptOffsetFactor = rc_defaultSuperscriptOffsetFactor;
         _subscriptOffsetFactor = rc_defaultSubscriptOffsetFactor;
         _obliquenessFactor = rc_defaultObliquenessOffsetFactor;

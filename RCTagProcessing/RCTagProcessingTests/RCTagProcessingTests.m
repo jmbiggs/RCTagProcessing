@@ -29,8 +29,11 @@
 - (void)testHTMLTag {
     HTMLTag *tag = nil;
     
+    //Basic invalid tag tests
     XCTAssertThrows([[HTMLTag alloc] initFromString:nil]);
     XCTAssertThrows([[HTMLTag alloc] initFromString:@""]);
+    XCTAssertThrows([[HTMLTag alloc] initFromString:@"<>"]);
+    XCTAssertThrows([[HTMLTag alloc] initFromString:@"</>"]);
     
     tag = [[HTMLTag alloc] initFromString:@"<unknownTag>"];
     
@@ -53,7 +56,9 @@
     XCTAssertEqual(tag.endLocation, 1000);
     XCTAssertTrue(NSEqualRanges(tag.range, NSMakeRange(1, 999)));
 
-    XCTAssert(YES, @"Pass");
+    //Test closing tag
+    tag = [[HTMLTag alloc] initFromString:@"</unknownTag>"];
+    XCTAssertEqualObjects(tag.value, @"unknownTag");
 }
 
 - (void)testHTMLTag_bold {
@@ -174,7 +179,7 @@
 
 }
 
-- (void)testHTMLTag_ {
+- (void)testHTMLTag_parsingPerformance {
     UIFont *smallFont = [UIFont fontWithName:@"Courier" size:6];
     UIFont *regularFont = [UIFont fontWithName:@"Courier" size:13];
     UIFont *boldFont = [UIFont fontWithName:@"Courier-Bold" size:13];
