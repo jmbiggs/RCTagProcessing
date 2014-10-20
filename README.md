@@ -1,7 +1,7 @@
 RCTagProcessing
 ===============
 
-HTML-like text formatting tag processing for UILabels and UIButtons, similar to TextView on Android (according to http://commonsware.com/blog/Android/2010/05/26/html-tags-supported-by-textview.html).
+HTML-like text formatting tag parsing for UILabels and UIButtons on iOS, similar to TextView on Android (according to http://commonsware.com/blog/Android/2010/05/26/html-tags-supported-by-textview.html).
 
 
 Currently supported tags are:
