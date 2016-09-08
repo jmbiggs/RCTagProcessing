@@ -17,12 +17,21 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedInstance = [[RCTagProcessor alloc] init];
-        [_sharedInstance setRegularFont:[UIFont systemFontOfSize:10.42]];
-        [_sharedInstance setBoldFont:[UIFont boldSystemFontOfSize:10.42]];
-        [_sharedInstance setSmallFont:[UIFont systemFontOfSize:5.42]];
     });
     
     return _sharedInstance;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        // set default fonts
+        _regularFont = [UIFont systemFontOfSize:10.42];
+        _boldFont = [UIFont boldSystemFontOfSize:10.42];
+        _smallFont = [UIFont systemFontOfSize:5.42];
+    }
+    return self;
 }
 
 - (NSAttributedString *)attributedStringForText:(NSString *)plainText {
