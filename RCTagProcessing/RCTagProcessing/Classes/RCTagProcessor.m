@@ -17,6 +17,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedInstance = [[RCTagProcessor alloc] init];
+        [_sharedInstance setRegularFont:[UIFont systemFontOfSize:10.42]];
+        [_sharedInstance setBoldFont:[UIFont boldSystemFontOfSize:10.42]];
+        [_sharedInstance setSmallFont:[UIFont systemFontOfSize:5.42]];
     });
     
     return _sharedInstance;
@@ -112,31 +115,6 @@
     }
 
     return tagsArray;
-}
-
-
-- (UIFont *)regularFont {
-    static UIFont *regularFontConstant = nil;
-    if (!regularFontConstant) {
-        regularFontConstant = [UIFont systemFontOfSize:10.42];
-    }
-    return regularFontConstant;
-}
-
-- (UIFont *)boldFont {
-    static UIFont *boldFontConstant = nil;
-    if (!boldFontConstant) {
-        boldFontConstant = [UIFont boldSystemFontOfSize:10.42];
-    }
-    return boldFontConstant;
-}
-
-- (UIFont *)smallFont {
-    static UIFont *smallFontConstant = nil;
-    if (!smallFontConstant) {
-        smallFontConstant = [UIFont systemFontOfSize:5.42];
-    }
-    return smallFontConstant;
 }
 
 @end
